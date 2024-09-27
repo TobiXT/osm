@@ -10,4 +10,12 @@ class StringUtility
     {
         return implode(',', GeneralUtility::intExplode(',', $list));
     }
+    public function myAction()
+    {
+        // Beispiel: Auslesen eines GET-Parameters 'myParam'
+        $myParam = GeneralUtility::_GP('card');
+
+        // Mach etwas mit dem Parameter
+        $this->view->assign('card', $carduuid);
+    }
 }
