@@ -34,6 +34,14 @@ call_user_func(
         );
 
         /**
+        * Add Typoscrit
+        * Error Handling Not Loaded PizPalue
+        */
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(
+            '@import "EXT:osm/Configuration/TypoScript/setup.typoscript"'
+        );
+
+        /**
          * Add user func for TCA fields
          */
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1600424607] = [
