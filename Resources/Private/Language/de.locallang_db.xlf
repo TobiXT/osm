@@ -64,6 +64,22 @@
 				<source>Zoom factor</source>
 				<target state="translated">Zoom Faktor</target>
 			</trans-unit>
+<trans-unit id="pi3.title">
+				<source>OpenStreetMap address from pool</source>
+				<target state="translated">OpenStreetMap Adressen aus Adresspool</target>
+			</trans-unit>
+			<trans-unit id="pi3.description">
+				<source>Show addresses from tt_address</source>
+				<target state="translated">Zeige Adressen aus tt_address</target>
+			</trans-unit>
+			<trans-unit id="pi3.settings.addresses">
+				<source>Select addresses</source>
+				<target state="translated">Adressen auswählen</target>
+			</trans-unit>
+			<trans-unit id="pi3.settings.zoom">
+				<source>Zoom factor</source>
+				<target state="translated">Zoom Faktor</target>
+			</trans-unit>
 
 			<trans-unit id="pleaseChoose">
 				<source>Please choose...</source>
