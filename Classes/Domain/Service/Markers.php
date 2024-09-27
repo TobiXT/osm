@@ -121,7 +121,7 @@ class Markers
     
     protected function getMarkersFromLink($configuration): array
     {
-     $list = StringUtility::Linklist($configuration['setting']['addresses']);
+     $list = intval(GeneralUtility::_GP('carduuid'));;
      if ($list === ''){
         throw new ConfigurationMissingException('Keine Adresse übergeben', 1597233868);
      }
