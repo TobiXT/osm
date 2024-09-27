@@ -20,6 +20,9 @@ class Marker
 
     protected string $title = '';
     protected string $description = '';
+    protected string $street = '';
+    protected string $zipcode = '';
+    protected string $place = '';
 
     protected float $latitude = 0.0;
     protected float $longitude = 0.0;
@@ -69,10 +72,38 @@ class Marker
     {
         return $this->description;
     }
-
     public function setDescription(string $description): self
     {
         $this->description = $description;
+        return $this;
+    }
+    public function getStreet(): string
+    {
+        return $this->street;
+    }
+    public function setStreet(string $street): self
+    {
+        $this->street = $street;
+        return $this;
+    }
+    public function getZipcode(): string
+    {
+        return $this->zipcode;
+    }
+
+    public function setZipcode(string $zipcode): self
+    {
+        $this->zipcode = $zipcode;
+        return $this;
+    }
+    public function getPlace(): string
+    {
+        return $this->place;
+    }
+
+    public function setPlace(string $place): self
+    {
+        $this->place = $place;
         return $this;
     }
 
@@ -159,6 +190,9 @@ class Marker
             'marker' => $this->getMarker(),
             'markertitle' => $this->getTitle(),
             'markerdescription' => $this->getDescription(),
+            'markerstreet' => $this->getStreet(),
+            'markerzipcode' => $this->getZipcode(),
+            'markerplace' => $this->getPlace(),
             'latitude' => $this->getLatitude(),
             'longitude' => $this->getLongitude()
         ];
