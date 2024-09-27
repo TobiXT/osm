@@ -42,3 +42,8 @@ ExtensionManagementUtility::addPiFlexFormValue(
     'osm_pi2',
     'FILE:EXT:osm/Configuration/FlexForms/FlexFormPi2.xml'
 );
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['osm_pi3'] = 'pi_flexform';
+ExtensionManagementUtility::addPiFlexFormValue(
+    'osm_pi2',
+    'FILE:EXT:osm/Configuration/FlexForms/FlexFormPi3.xml'
+);
