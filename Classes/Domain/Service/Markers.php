@@ -34,6 +34,8 @@ class Markers
         $configuration = $this->getFlexFormFromContentElement($contentIdentifier);
         if ($this->isPlugin1($contentIdentifier)) {
             $markers = $this->buildFromPi1($configuration);
+        }elseif($this->isPlugin3($contentIdentifier)){
+            $markers = $this->getMarkersFromLink($configuration);
         } else {
             $markers = $this->getMarkersFromAddresses($configuration);
         }
@@ -113,6 +115,35 @@ class Markers
         }
         return $records;
     }
+    protected function getMarkersFromLink($configuration): array
+    {
+     $list = StringUtility::Linklist($configuration['setting']['addresses']);
+     if ($list === ''){
+        throw new ConfigurationMissingException('Keine Adresse übergeben', 1597233868);
+     }
+     $queryBuilder = DatabaseUtility::getQueryBuilderForTable('tt_address');
+        $records = $queryBuilder
+            ->select(
+                'uid as tt_address_uid',
+                'name as markertitle',
+                'description as markerdescription',
+                'address as markerstreet',
+                'zip as markerzipcode',
+                'city as markerplace',
+                'latitude',
+                'longitude'
+            )
+            ->from('tt_address')
+            ->where('uid in (' . $list . ')')
+            ->executeQuery()
+            ->fetchAllAssociative();
+        foreach ($records as &$record) {
+            if (!empty($record['markertitle'])) {
+                $record['marker'] = 1;
+            }
+        }
+        return $records;
+    }
 
     /**
      * @param array $markers
@@ -165,5 +196,15 @@ class Markers
             ->where('uid=' . (int)$contentIdentifier . ' and CType="list"')
             ->executeQuery()
             ->fetchOne() === 'osm_pi1';
+    }
+    protected function isPlugin3(int $contentIdentifier): bool
+    {
+        $queryBuilder = DatabaseUtility::getQueryBuilderForTable('tt_content', true);
+        return (string)$queryBuilder
+            ->select('list_type')
+            ->from('tt_content')
+            ->where('uid=' . (int)$contentIdentifier . ' and CType="list"')
+            ->executeQuery()
+            ->fetchOne() === 'osm_pi3';
     }
 }
