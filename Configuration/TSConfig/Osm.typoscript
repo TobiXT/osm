@@ -19,6 +19,16 @@ mod.wizards.newContentElement.wizardItems.plugins {
         list_type = osm_pi2
       }
     }
+
+    osm_pi3 {
+      iconIdentifier = extension-osm-icon
+      title = LLL:EXT:osm/Resources/Private/Language/locallang_db.xlf:pi3.title
+      description = LLL:EXT:osm/Resources/Private/Language/locallang_db.xlf:pi3.description
+      tt_content_defValues {
+        CType = list
+        list_type = osm_pi3
+      }
+    }
   }
 }
 
