@@ -142,8 +142,8 @@ function Osm() {
         continue;
       }
       var label = null;
-      if (marker.markertitle || marker.markerdescription) {
-        label = '<h5>' + marker.markertitle + '</h5>' + marker.markerdescription;
+      if (marker.markertitle || marker.markerdescription ) {
+        label = '<h4>' + marker.markertitle + '</h4></br>' + '<p>' + marker.markerdescription + '</br></br>' + marker.markerstreet + '</br>' + marker.markerzipcode + ' ' + marker.markerplace + '</p>';
       }
       var iconWidth = 23;
       var iconHeight = 38;
