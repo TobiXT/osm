@@ -50,6 +50,19 @@
 				<source>Zoom factor</source>
 			</trans-unit>
 
+	<trans-unit id="pi3.title">
+				<source>OpenStreetMap address from pool</source>
+			</trans-unit>
+			<trans-unit id="pi3.description">
+				<source>Show addresses from tt_address</source>
+			</trans-unit>
+			<trans-unit id="pi3.settings.addresses">
+				<source>Select addresses</source>
+			</trans-unit>
+			<trans-unit id="pi3.settings.zoom">
+				<source>Zoom factor</source>
+			</trans-unit>
+
 			<trans-unit id="pleaseChoose">
 				<source>Please choose...</source>
 			</trans-unit>
