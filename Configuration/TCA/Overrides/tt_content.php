@@ -21,6 +21,12 @@ if (ExtensionManagementUtility::isLoaded('tt_address')) {
         'LLL:EXT:osm/Resources/Private/Language/locallang_db.xlf:pi2.title',
         'extension-osm-icon'
     );
+ ExtensionUtility::registerPlugin(
+    'osm',
+    'Pi1',
+    'LLL:EXT:osm/Resources/Private/Language/locallang_db.xlf:pi3.title',
+    'extension-osm-icon'
+);
 }
 
 /**
@@ -28,6 +34,7 @@ if (ExtensionManagementUtility::isLoaded('tt_address')) {
  */
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['osm_pi1'] = 'select_key,pages,recursive';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['osm_pi2'] = 'select_key,pages,recursive';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['osm_pi3'] = 'select_key,pages,recursive';
 
 /**
  * Include Flexform
