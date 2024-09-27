@@ -96,6 +96,9 @@ class Markers
                 'uid as tt_address_uid',
                 'name as markertitle',
                 'description as markerdescription',
+                'address as markerstreet',
+                'zip as markerzipcode',
+                'city as markerplace',
                 'latitude',
                 'longitude'
             )
