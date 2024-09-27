@@ -115,6 +115,10 @@ class Markers
         }
         return $records;
     }
+/**
+* Versuch Werte Über URL zu bekommen
+*/
+    
     protected function getMarkersFromLink($configuration): array
     {
      $list = StringUtility::Linklist($configuration['setting']['addresses']);
