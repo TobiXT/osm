@@ -23,7 +23,7 @@ if (ExtensionManagementUtility::isLoaded('tt_address')) {
     );
  ExtensionUtility::registerPlugin(
     'osm',
-    'Pi1',
+    'Pi3',
     'LLL:EXT:osm/Resources/Private/Language/locallang_db.xlf:pi3.title',
     'extension-osm-icon'
 );
@@ -51,6 +51,6 @@ ExtensionManagementUtility::addPiFlexFormValue(
 );
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['osm_pi3'] = 'pi_flexform';
 ExtensionManagementUtility::addPiFlexFormValue(
-    'osm_pi2',
+    'osm_pi3',
     'FILE:EXT:osm/Configuration/FlexForms/FlexFormPi3.xml'
 );
