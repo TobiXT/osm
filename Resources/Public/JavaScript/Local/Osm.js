@@ -59,6 +59,9 @@ function Osm() {
     markerurl = container.getAttribute('data-osm-markerurl');
     markerGraphics = container.getAttribute('data-osm-markergraphics');
     getMarkersFromAjaxAndCreateMap(container);
+
+    // Nach der Kartenerstellung Umkreissuche starten
+    searchNearby(latitude, longitude, 15000); // 15km Radius
   };
 
   /**
@@ -135,14 +138,13 @@ function Osm() {
   var addMarkers = function() {
     var vectorLayer = new OpenLayers.Layer.Vector('Overlay');
 
-
     for (var i = 0; i < markers.length; i++) {
       var marker = markers[i];
       if (marker.marker === 0) {
         continue;
       }
       var label = null;
-      if (marker.markertitle || marker.markerdescription ) {
+      if (marker.markertitle || marker.markerdescription) {
         label = '<h4>' + marker.markertitle + '</h4></br>' + '<p>' + marker.markerdescription + '</br></br>' + marker.markerstreet + '</br>' + marker.markerzipcode + ' ' + marker.markerplace + '</p>';
       }
       var iconWidth = 23;
@@ -185,7 +187,7 @@ function Osm() {
 
       if (label !== null) {
         var controls = {
-          selector: new OpenLayers.Control.SelectFeature(vectorLayer, {onSelect: createPopup, onUnselect: destroyPopup})
+          selector: new OpenLayers.Control.SelectFeature(vectorLayer, { onSelect: createPopup, onUnselect: destroyPopup })
         };
 
         function createPopup(feature) {
@@ -204,6 +206,7 @@ function Osm() {
             map.addPopup(feature.popup);
           }
         }
+
         function destroyPopup(feature) {
           if (feature.attributes.description !== null) {
             feature.popup.destroy();
@@ -221,6 +224,60 @@ function Osm() {
   };
 
   /**
+   * Search nearby amenities (e.g., restaurants, hotels)
+   * @param {number} lat
+   * @param {number} lon
+   * @param {number} radius
+   */
+  var searchNearby = function(lat, lon, radius) {
+    var overpassUrl = `https://overpass-api.de/api/interpreter?data=[out:json];node["amenity"~"restaurant|hotel"](around:${radius},${lat},${lon});out;`;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState === 4 && this.status === 200) {
+        var result = JSON.parse(this.responseText);
+        addSearchResultsToMap(result);
+      }
+    };
+    xhttp.open('GET', overpassUrl, true);
+    xhttp.send();
+  };
+
+  /**
+   * Add search results to the map
+   * @param {object} result
+   */
+  var addSearchResultsToMap = function(result) {
+    var vectorLayer = new OpenLayers.Layer.Vector('Search Results');
+
+    result.elements.forEach(function(element) {
+      if (element.lat && element.lon) {
+        var label = '<h4>' + (element.tags.name || 'Unknown') + '</h4>' + '<p>' + (element.tags.amenity || 'Amenity') + '</p>';
+
+        var feature = new OpenLayers.Feature.Vector(
+          new OpenLayers.Geometry.Point(element.lon, element.lat).transform(
+            new OpenLayers.Projection('EPSG:4326'),
+            new OpenLayers.Projection('EPSG:900913')
+          ),
+          {
+            description: label
+          },
+          {
+            externalGraphic: 'path-to-your-marker-graphic.png', // Replace with your marker icon
+            graphicWidth: 23,
+            graphicHeight: 38,
+            graphicXOffset: -15,
+            graphicYOffset: -36
+          }
+        );
+        vectorLayer.addFeatures(feature);
+      }
+    });
+
+    map.addLayer(vectorLayer);
+  };
+
+  /**
    * This function is same as PHP's nl2br() with default parameters.
    *
    * @param {string} str Input text
@@ -230,7 +287,7 @@ function Osm() {
    */
   var nl2br = function(str, replaceMode, isXhtml) {
     var breakTag = (isXhtml) ? '<br />' : '<br>';
-    var replaceStr = (replaceMode) ? '$1'+ breakTag : '$1'+ breakTag +'$2';
+    var replaceStr = (replaceMode) ? '$1' + breakTag : '$1' + breakTag + '$2';
     return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, replaceStr);
   };
 
@@ -275,9 +332,11 @@ function Osm() {
   };
 }
 
+// Initialisierung für alle Karten-Container
 var containers = document.querySelectorAll('[data-osm="map"]');
 for (var i = 0; i < containers.length; i++) {
   var osm = new Osm();
   osm.initializeMap(containers[i]);
 }
+
 
